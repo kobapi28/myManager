@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MoneyItem } from 'src/interface';
 
 @Component({
   selector: 'app-detail-list',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detail-list.component.scss'],
 })
 export class DetailListComponent implements OnInit {
-
+  @Input() item: MoneyItem;
+  @Input() equalDate: boolean;
   constructor() { }
 
   ngOnInit() {}

@@ -1,1 +1,1 @@
-<app-detail-list></app-detail-list>
+<app-detail-list *ngFor="let item of items; index as i" [item]="item" [equalDate]="checkDate(i)"></app-detail-list>

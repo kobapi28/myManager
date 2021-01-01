@@ -1,12 +1,12 @@
-<ion-item-divider>
+<ion-item-divider color="medium" *ngIf="equalDate">
   <ion-label id="divider-label">
-    2020/12/31
+    {{item.date}}
   </ion-label>
 </ion-item-divider>
 <ion-item>
   <ion-label>
-    shopping
+    {{item.category}}
   </ion-label>
   <ion-icon icon="person-sharp" size="small" slot="start"></ion-icon>
-  <ion-text slot="end">1000</ion-text>
+  <ion-text slot="end">{{item.amount}}</ion-text>
 </ion-item>
