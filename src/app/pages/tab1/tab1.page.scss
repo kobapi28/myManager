@@ -36,3 +36,11 @@
 .buttons{
   text-align: center;
 }
+
+.expenses{
+  --background: var(--ion-color-danger-shade);
+}
+
+.income{
+  --background: var(--ion-color-primary-shade);
+}

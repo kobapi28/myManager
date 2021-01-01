@@ -1,8 +1,27 @@
 #sticky{
   position: sticky;
   top: 174px;
+  --background: var(--ion-color-light);
+  border: var(--ion-color-light) solid 1px; 
 }
 
 #divider-label{
   margin: 5px auto;
+  color: var(--ion-color-dark);
+}
+
+ion-item{
+  border: var(--ion-color-light) solid 1px;
+}
+
+.income{
+  color: var(--ion-color-primary-shade);
+}
+
+.expenses{
+  color: var(--ion-color-danger-shade);
+}
+
+.yen{
+  font-size: 12px;
 }
