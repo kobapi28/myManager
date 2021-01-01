@@ -5,6 +5,22 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'edit-detail',
+    loadChildren: () => import('./pages/edit-detail/edit-detail.module').then( m => m.EditDetailPageModule)
+  },
+  {
+    path: 'income',
+    loadChildren: () => import('./pages/income/income.module').then( m => m.IncomePageModule)
+  },
+  {
+    path: 'expenses',
+    loadChildren: () => import('./pages/expenses/expenses.module').then( m => m.ExpensesPageModule)
   }
 ];
 @NgModule({
