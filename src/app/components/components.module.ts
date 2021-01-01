@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 import { DetailListsComponent } from './detail-lists/detail-lists.component';
 import { GenreTilesComponent } from './genre-tiles/genre-tiles.component';
@@ -20,6 +21,7 @@ import { InputFormsModule } from './input-forms/input-forms.module';
   ],
   imports: [
     CommonModule,
+    IonicModule,
     DetailListsModule,
     GenreTilesModule,
     InputFormsModule

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 import { DetailListComponent } from './detail-list/detail-list.component';
 
@@ -8,7 +9,8 @@ import { DetailListComponent } from './detail-list/detail-list.component';
     DetailListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   exports: [
     DetailListComponent
