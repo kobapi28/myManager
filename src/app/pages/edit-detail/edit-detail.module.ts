@@ -8,12 +8,15 @@ import { EditDetailPageRoutingModule } from './edit-detail-routing.module';
 
 import { EditDetailPage } from './edit-detail.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EditDetailPageRoutingModule
+    EditDetailPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [EditDetailPage]
 })

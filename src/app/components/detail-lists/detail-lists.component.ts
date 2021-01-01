@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DetailListsModule } from './detail-lists.module';
 
 @Component({
   selector: 'app-detail-lists',

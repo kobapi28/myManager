@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GenreTilesModule } from './genre-tiles.module';
 
 @Component({
   selector: 'app-genre-tiles',

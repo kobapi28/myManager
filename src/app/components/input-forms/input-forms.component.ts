@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InputFormsModule } from './input-forms.module';
 
 @Component({
   selector: 'app-input-forms',
