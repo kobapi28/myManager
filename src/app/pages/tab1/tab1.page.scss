@@ -1,5 +1,12 @@
+#sticky{
+  position: sticky;
+  background-color: white;
+  top: 0px;
+  z-index: 100;
+}
+
 #amount-text{
-  margin: 20px 0px;
+  padding: 20px 0px;
   text-align: center;
   h1{
     display: inline-block;
@@ -10,6 +17,7 @@
   h3{
     display: inline-block;
     font-weight: lighter;
+    margin: unset;
   }
   h4{
     font-weight: lighter;
