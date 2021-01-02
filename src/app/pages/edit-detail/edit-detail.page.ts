@@ -7,7 +7,7 @@ import { InputProps } from 'src/interface';
   styleUrls: ['./edit-detail.page.scss'],
 })
 export class EditDetailPage implements OnInit {
-  props: InputProps = {buttonName: '更新', tileNames: [], toNext: 'detail'}
+  props: InputProps = {buttonName: '更新', tileNames: [], toNext: 'detail', isUpdate: true}
 
   constructor() { }
 

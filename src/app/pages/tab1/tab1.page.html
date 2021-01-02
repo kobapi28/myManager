@@ -18,5 +18,5 @@
       <ion-button class="home-button income" (click)="toIncome()">収入</ion-button>
     </div>
   </div>
-  <app-detail-lists style="z-index: 0;" [items]="datas"></app-detail-lists>
+  <app-detail-lists style="z-index: 0;" [items]="datas$ | async"></app-detail-lists>
 </ion-content>

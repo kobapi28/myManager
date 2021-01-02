@@ -31,8 +31,10 @@ export class StorageService {
   // add item
   pushDetailItem(item: MoneyItem){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
-      const detailItems = res.splice(0, 0, item);
-      this.storage.set('detailItemDeta',detailItems);
+      const items = [];
+      items.push(item);
+      const detailItems = items.concat(res);
+      this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
   }
@@ -42,7 +44,7 @@ export class StorageService {
   removeDetailItem(id: string){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
       const detailItems = res.filter(item => item.id !== id);
-      this.storage.set('detailItemDeta',detailItems);
+      this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
   }
@@ -58,7 +60,7 @@ export class StorageService {
           return item;
         }
       })
-      this.storage.set('detailItemDeta',detailItems);
+      this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
   }

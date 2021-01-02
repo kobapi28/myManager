@@ -8,7 +8,7 @@ import { InputProps } from 'src/interface';
   styleUrls: ['./expenses.page.scss'],
 })
 export class ExpensesPage implements OnInit {
-  props: InputProps = {buttonName: '支出を確定', tileNames: [], toNext: 'home'}
+  props: InputProps = {buttonName: '支出を確定', tileNames: [], toNext: 'home', isIncome: false, isUpdate: false}
 
   constructor(private router: Router) { }
 
