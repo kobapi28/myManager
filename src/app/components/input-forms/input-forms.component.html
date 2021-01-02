@@ -1,6 +1,12 @@
-<p>
-  input-forms works!
-</p>
-<app-date-form></app-date-form>
-<app-memo-form></app-memo-form>
-<app-money-form></app-money-form>
+<ion-item>
+  <ion-label>date</ion-label>
+  <ion-datetime></ion-datetime>
+</ion-item>
+
+<ion-item>
+  <ion-label>money</ion-label>
+  <ion-input type="number" id="money-form"></ion-input>
+  <ion-text>yen</ion-text>
+</ion-item>
+
+<ion-button (click)="presentMemoAlert()" class="width-button">memo</ion-button>

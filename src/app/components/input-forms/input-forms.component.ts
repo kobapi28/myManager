@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InputFormsModule } from './input-forms.module';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-input-forms',
@@ -8,8 +8,38 @@ import { InputFormsModule } from './input-forms.module';
 })
 export class InputFormsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private alertCtrl: AlertController) { }
 
   ngOnInit() {}
+
+  async presentMemoAlert() {
+    const alert = await this.alertCtrl.create({
+      cssClass: '',
+      header: 'memo',
+      inputs: [
+        {
+          type: 'text',
+          placeholder: 'memo'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 }
