@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { InputProps } from 'src/interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-input-forms',
@@ -7,8 +9,12 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./input-forms.component.scss'],
 })
 export class InputFormsComponent implements OnInit {
+  @Input() props: InputProps;
 
-  constructor(private alertCtrl: AlertController) { }
+  constructor(
+    private alertCtrl: AlertController,
+    private router: Router
+  ) { }
 
   ngOnInit() {}
 
@@ -40,6 +46,11 @@ export class InputFormsComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  updateDetailItems(){
+    // TODO: choice function
+    this.router.navigateByUrl(this.props.toNext);
   }
 
 }

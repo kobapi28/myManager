@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InputProps } from 'src/interface';
 
 @Component({
   selector: 'app-edit-detail',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-detail.page.scss'],
 })
 export class EditDetailPage implements OnInit {
+  props: InputProps = {buttonName: '更新', tileNames: [], toNext: 'detail'}
 
   constructor() { }
 

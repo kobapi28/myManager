@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InputProps } from 'src/interface';
 
 @Component({
   selector: 'app-expenses',
@@ -7,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./expenses.page.scss'],
 })
 export class ExpensesPage implements OnInit {
+  props: InputProps = {buttonName: '支出を確定', tileNames: [], toNext: 'home'}
 
   constructor(private router: Router) { }
 
