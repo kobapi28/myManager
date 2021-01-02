@@ -24,3 +24,11 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.width-button{
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  --border-radius: 50px;
+}
