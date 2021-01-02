@@ -7,7 +7,7 @@ export interface MoneyItem {
   isIncome: boolean;  // 収入かどうか
   category: incomeCategory | expensesCategory;  // カテゴリ
   id: string;  // id
-  memo?: string;  // memo
+  memo: string;  // memo
   amount: number;  // 金額
   date: string;  // 日付
 }
@@ -18,4 +18,7 @@ export interface InputProps {
   buttonColor?: string;
   tileNames: string[];
   toNext: string;
+  isUpdate: boolean;
+  item?: MoneyItem;
+  isIncome? :boolean;
 }
