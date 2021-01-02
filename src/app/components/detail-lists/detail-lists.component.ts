@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MoneyItem } from 'src/interface';
-import { DetailListsModule } from './detail-lists.module';
+import { Router } from '@angular/router';
+import { TransitionService } from '../../services/transition.service';
 
 @Component({
   selector: 'app-detail-lists',
@@ -9,7 +10,10 @@ import { DetailListsModule } from './detail-lists.module';
 })
 export class DetailListsComponent implements OnInit {
   @Input() items: MoneyItem[];
-  constructor() { }
+  constructor(
+    private router: Router,
+    private transitionService: TransitionService
+  ) { }
 
   ngOnInit() {}
 
@@ -23,6 +27,11 @@ export class DetailListsComponent implements OnInit {
     }else{
       return true;
     }
+  }
+
+  toDetail(item: MoneyItem){
+    this.transitionService.setDetailItem(item);
+    this.router.navigate(['/detail',item.id]);
   }
 
 }

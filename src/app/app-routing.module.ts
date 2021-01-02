@@ -7,11 +7,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'detail',
+    path: 'detail/:id',
     loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
-    path: 'edit-detail',
+    path: 'edit/:id',
     loadChildren: () => import('./pages/edit-detail/edit-detail.module').then( m => m.EditDetailPageModule)
   },
   {
