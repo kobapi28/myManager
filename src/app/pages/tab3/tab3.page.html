@@ -7,10 +7,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="setValue()">set</ion-button>
-  <ion-button (click)="getValue()">get</ion-button>
-  <ion-text>{{maxAmount}}</ion-text>
-  <div *ngFor="let item of result">
-    <ion-text>{{item.amount}}</ion-text>
-  </div>
+  <ion-input type="number" [(ngModel)]="maxAmount"></ion-input>
+  <ion-button (click)="updateMaxAmount()">update</ion-button>
 </ion-content>
