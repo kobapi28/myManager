@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 import { InputProps, MoneyItem } from 'src/interface';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
+import { TransitionService } from '../../services/transition.service';
 
 @Component({
   selector: 'app-input-forms',
@@ -16,14 +17,15 @@ export class InputFormsComponent implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private transitionService: TransitionService
   ) {
   }
 
   ngOnInit() {
     this.item = 
     this.props.isUpdate? 
-    this.props.item : 
+    this.transitionService.getDetailItem() : 
     {
       isIncome: this.props.isIncome,
       category: null,
@@ -66,16 +68,26 @@ export class InputFormsComponent implements OnInit {
 
   updateDetailItems(){
     // TODO: choice function
-    if(this.props.item){
+    if(this.props.isUpdate){
       // update Item
-      this.storageService.updateDetailItem(this.item);
+      let detailItem = Object.freeze(this.item);
+      detailItem = {
+        isIncome: this.item.isIncome, // keep
+        category: this.item.category,
+        id: this.item.id, // keep
+        memo: this.item.memo,
+        amount: Math.floor(Math.random() * 10000),
+        date: this.item.date // keep
+      }
+      this.storageService.updateDetailItem(detailItem);
+      this.transitionService.setDetailItem(detailItem);
     }else{
       // new Item
       this.item.date = new Date().toLocaleDateString();
       this.item.category = this.props.isIncome ? 'work': 'buy';
       this.storageService.pushDetailItem(this.item);
     }
-    this.router.navigateByUrl(this.props.toNext);
+    this.router.navigate([this.props.toNext,this.item.id]);
   }
 
 

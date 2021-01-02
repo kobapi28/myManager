@@ -15,6 +15,7 @@ export class TransitionService {
   }
 
   getDetailItem(){
+    console.log(this.detailItem);
     return this.detailItem;
   }
 }

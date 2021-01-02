@@ -27,4 +27,8 @@ export class DetailPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  toEdit(){
+    this.router.navigate(['/edit',this.item.id]);
+  }
+
 }

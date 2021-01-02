@@ -10,6 +10,6 @@
 <ion-content>
   <p>{{item.id}}</p>
   <app-date-form></app-date-form>
-  <ion-button class="width-button">edit</ion-button>
+  <ion-button class="width-button" (click)="toEdit()">edit</ion-button>
   <ion-button class="width-button" color="danger" (click)="removeDetailItem()">remove</ion-button>
 </ion-content>

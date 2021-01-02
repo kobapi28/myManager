@@ -19,6 +19,5 @@ export interface InputProps {
   tileNames: string[];
   toNext: string;
   isUpdate: boolean;
-  item?: MoneyItem;
   isIncome? :boolean;
 }
