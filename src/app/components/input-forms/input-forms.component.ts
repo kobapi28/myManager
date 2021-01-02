@@ -81,13 +81,14 @@ export class InputFormsComponent implements OnInit {
       }
       this.storageService.updateDetailItem(detailItem);
       this.transitionService.setDetailItem(detailItem);
+      this.router.navigate([this.props.toNext,this.item.id]);
     }else{
       // new Item
       this.item.date = new Date().toLocaleDateString();
       this.item.category = this.props.isIncome ? 'work': 'buy';
       this.storageService.pushDetailItem(this.item);
+      this.router.navigate([this.props.toNext]);
     }
-    this.router.navigate([this.props.toNext,this.item.id]);
   }
 
 
