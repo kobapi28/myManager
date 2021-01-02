@@ -11,3 +11,11 @@ export interface MoneyItem {
   amount: number;  // 金額
   date: string;  // 日付
 }
+
+
+export interface InputProps {
+  buttonName: string;
+  buttonColor?: string;
+  tileNames: string[];
+  toNext: string;
+}
