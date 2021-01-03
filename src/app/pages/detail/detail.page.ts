@@ -19,6 +19,10 @@ export class DetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.ionViewDidEnter();
+  }
+
+  ionViewDidEnter(){
     this.item = this.transitionService.getDetailItem();
   }
 
