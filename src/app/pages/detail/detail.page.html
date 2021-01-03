@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [class.is-income]="item.isIncome">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -7,9 +7,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <p>{{item.id}}</p>
-  <app-date-form></app-date-form>
-  <ion-button class="width-button" (click)="toEdit()">edit</ion-button>
-  <ion-button class="width-button" color="danger" (click)="removeDetailItem()">remove</ion-button>
+<ion-content [class.is-income]="item.isIncome">
+  <div id="inner-content">
+    <div class="item-info">
+      <ion-avatar>
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+      <ion-text><h1>shopping</h1></ion-text>
+      <ion-text><h4>{{item.date}}</h4></ion-text>
+      <ion-chip>buy</ion-chip><br>
+      <ion-text class="amount-text"><h1>{{item.amount}}</h1><h3>円</h3></ion-text>
+    </div>
+    <div class="buttons">
+      <ion-button class="width-button" (click)="toEdit()">編集する</ion-button>
+      <ion-button class="width-button" color="danger" (click)="removeDetailItem()">削除する</ion-button>
+    </div>
+  </div>
 </ion-content>
