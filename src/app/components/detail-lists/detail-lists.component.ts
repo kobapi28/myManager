@@ -17,18 +17,6 @@ export class DetailListsComponent implements OnInit {
 
   ngOnInit() {}
 
-  checkDate(i:number){
-    if(i===0){
-      return true;
-    }
-
-    if(this.items[i].date === this.items[i-1].date){
-      return false;
-    }else{
-      return true;
-    }
-  }
-
   toDetail(item: MoneyItem){
     this.transitionService.setDetailItem(item);
     this.router.navigate(['/detail',item.id]);

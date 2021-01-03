@@ -8,7 +8,6 @@ import { MoneyItem } from 'src/interface';
 })
 export class DetailListComponent implements OnInit {
   @Input() item: MoneyItem;
-  @Input() equalDate: boolean;
   constructor() { }
 
   ngOnInit() {}

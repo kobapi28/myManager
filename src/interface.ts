@@ -10,6 +10,7 @@ export interface MoneyItem {
   memo: string;  // memo
   amount: number;  // 金額
   date: string;  // 日付
+  isDateOfPreviosItem: boolean; //前のアイテムの日付と同じか
 }
 
 

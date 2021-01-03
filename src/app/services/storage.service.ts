@@ -31,11 +31,30 @@ export class StorageService {
   // add item
   pushDetailItem(item: MoneyItem){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
-      const items = [];
+      const items: MoneyItem[] = [];
       items.push(item);
-      const detailItems = items.concat(res);
-      this.storage.set('detailItemData',detailItems);
-      this.store.dispatch(updateDetailItems({detailItems}))
+      // 直近のアイテムの日付と同じならfalseにする
+      console.log(res);
+      if(res === null){
+        // storage に何もない場合 (null)
+        this.storage.set('detailItemData',items);
+        this.store.dispatch(updateDetailItems({detailItems: items}))
+      }else if(res.length === 0){
+        // storage に何もない場合 (0)
+        this.storage.set('detailItemData',items);
+        this.store.dispatch(updateDetailItems({detailItems: items}))
+      }else if(res[0].date === item.date){
+        //  storage に値は存在し、最新が今日の場合
+        res[0].isDateOfPreviosItem = false;
+        const detailItems = items.concat(res);
+        this.storage.set('detailItemData',detailItems);
+        this.store.dispatch(updateDetailItems({detailItems}))
+      }else{
+        //  storage に値は存在し、最新が前日よりも古い場合
+        const detailItems = items.concat(res);
+        this.storage.set('detailItemData',detailItems);
+        this.store.dispatch(updateDetailItems({detailItems}))
+      }
     })
   }
 
@@ -63,6 +82,14 @@ export class StorageService {
       this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
+  }
+
+  // from setting
+  // remove all item
+  removeAllDetailItems(){
+    this.storage.clear();
+    const detailItems: MoneyItem[] = [];
+    this.store.dispatch(updateDetailItems({detailItems}))
   }
 
 

@@ -32,7 +32,8 @@ export class InputFormsComponent implements OnInit {
       id: this.getUniqueStr(),
       memo: '',
       amount: 1000,
-      date: null
+      date: null,
+      isDateOfPreviosItem: true
     };
   }
 
@@ -77,7 +78,8 @@ export class InputFormsComponent implements OnInit {
         id: this.item.id, // keep
         memo: this.item.memo,
         amount: Math.floor(Math.random() * 10000),
-        date: this.item.date // keep
+        date: this.item.date, // keep,
+        isDateOfPreviosItem: this.item.isDateOfPreviosItem // keep
       }
       this.storageService.updateDetailItem(detailItem);
       this.transitionService.setDetailItem(detailItem);
@@ -86,6 +88,7 @@ export class InputFormsComponent implements OnInit {
       // new Item
       this.item.date = new Date().toLocaleDateString();
       this.item.category = this.props.isIncome ? 'work': 'buy';
+      console.log(this.item);
       this.storageService.pushDetailItem(this.item);
       this.router.navigate([this.props.toNext]);
     }

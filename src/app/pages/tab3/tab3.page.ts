@@ -17,4 +17,8 @@ export class Tab3Page {
     this.storageService.updateMaxAmount(this.maxAmount);
   }
 
+  deleteStorageData(){
+    this.storageService.removeAllDetailItems();
+  }
+
 }
