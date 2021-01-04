@@ -27,7 +27,7 @@ export class DetailPage implements OnInit {
   }
 
   removeDetailItem(){
-    this.storageService.removeDetailItem(this.item.id);
+    this.storageService.removeDetailItem(this.item);
     this.router.navigate(['/home']);
   }
 
