@@ -86,10 +86,12 @@ export class StorageService {
 
   // from setting
   // remove all item
-  removeAllDetailItems(){
+  deleteAllData(){
     this.storage.clear();
     const detailItems: MoneyItem[] = [];
-    this.store.dispatch(updateDetailItems({detailItems}))
+    const maxAmount: number = 0;
+    this.store.dispatch(updateDetailItems({detailItems}));
+    this.store.dispatch(updateMaxAmount({maxAmount}));
   }
 
 

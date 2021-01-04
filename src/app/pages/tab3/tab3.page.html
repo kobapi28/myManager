@@ -7,7 +7,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-input type="number" [(ngModel)]="maxAmount"></ion-input>
-  <ion-button (click)="updateMaxAmount()">update</ion-button>
-  <ion-button (click)="deleteStorageData()">delete</ion-button>
+  <ion-item>
+    <ion-label>目標金額を変更する</ion-label>
+    <ion-button slot="end" (click)="presentAlertPrompt()" size="default">
+      変更
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-label>データを削除する</ion-label>
+    <ion-button slot="end" (click)="presentAlertConfirm()" color="danger" size="default">
+      削除
+    </ion-button>
+  </ion-item>
 </ion-content>
