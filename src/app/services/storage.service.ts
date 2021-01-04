@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 import { MoneyItem } from 'src/interface';
-import { updateDetailItems, updateMaxAmount } from '../store/data';
+import { updateDetailItems, updateMaxAmount, updateNowValue } from '../store/data';
 
 
 @Injectable({
@@ -31,6 +31,13 @@ export class StorageService {
   // add item
   pushDetailItem(item: MoneyItem){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
+      // update nowValue
+      if(item.isIncome){
+        this.updateNowValue(item.amount, 0);
+      }else{
+        this.updateNowValue(0, item.amount);
+      }
+
       const items: MoneyItem[] = [];
       items.push(item);
       // 直近のアイテムの日付と同じならfalseにする
@@ -60,9 +67,16 @@ export class StorageService {
 
   //  from detail
   //  remove item
-  removeDetailItem(id: string){
+  removeDetailItem(item: MoneyItem){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
-      const detailItems = res.filter(item => item.id !== id);
+      // update nowValue
+      if(item.isIncome){
+        this.updateNowValue(0, item.amount);
+      }else{
+        this.updateNowValue(item.amount, 0);
+      }
+
+      const detailItems = res.filter(_item => _item.id !== item.id);
       if(detailItems.length > 0){
         detailItems[0].isDateOfPreviosItem = true;
       }
@@ -77,6 +91,12 @@ export class StorageService {
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
       const detailItems = res.map(item => {
         if(item.id === updatedItem.id){
+          // update nowValue
+          if(updatedItem.isIncome){
+            this.updateNowValue(updatedItem.amount, item.amount);
+          }else{
+            this.updateNowValue(item.amount, updatedItem.amount);
+          }
           return updatedItem;
         }else{
           return item;
@@ -93,8 +113,10 @@ export class StorageService {
     this.storage.clear();
     const detailItems: MoneyItem[] = [];
     const maxAmount: number = 0;
+    const nowValue: number = 0;
     this.store.dispatch(updateDetailItems({detailItems}));
     this.store.dispatch(updateMaxAmount({maxAmount}));
+    this.store.dispatch(updateNowValue({nowValue}));
   }
 
 
@@ -115,5 +137,30 @@ export class StorageService {
   updateMaxAmount(maxAmount: number){
     this.storage.set('maxAmount',maxAmount);
     this.store.dispatch(updateMaxAmount({maxAmount: maxAmount}));
+  }
+
+
+  //
+  //  nowValue
+  //
+
+  // from home
+  loadNowValue(){
+    this.storage.get('nowValue').then((res: number) => {
+      if(res === null){
+        res = 0;
+      }
+      this.store.dispatch(updateNowValue({nowValue: res}));
+    })
+  }
+
+  // from income,expense,edit
+  // update nowValue
+  updateNowValue(beforeValue: number, newValue: number){
+    this.storage.get('nowValue').then((res: number) => {
+      const nowValue = res - (newValue - beforeValue);
+      this.storage.set('nowValue', nowValue);
+      this.store.dispatch(updateNowValue({nowValue: nowValue}));
+    })
   }
 }

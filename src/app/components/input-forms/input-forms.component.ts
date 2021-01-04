@@ -68,7 +68,6 @@ export class InputFormsComponent implements OnInit {
   }
 
   updateDetailItems(){
-    // TODO: choice function
     if(this.props.isUpdate){
       // update Item
       let detailItem = Object.freeze(this.item);

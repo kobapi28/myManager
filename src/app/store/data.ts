@@ -15,12 +15,17 @@ export const updateDetailItems = createAction(
 );
 
 
-
-
 // maxAmount
 export const updateMaxAmount = createAction(
   '[MaxAmount] Update Max Amount',
   props<{maxAmount: number}>()
+);
+
+
+// nowValue
+export const updateNowValue = createAction(
+  '[NowValue] Update Now Value',
+  props<{nowValue: number}>()
 );
 
 
@@ -34,11 +39,13 @@ export const updateMaxAmount = createAction(
 export interface State {
   detailItems: MoneyItem[];
   maxAmount: number;
+  nowValue: number;
 }
 
 export const initialState: State = {
   detailItems: [],
-  maxAmount: 0
+  maxAmount: 0,
+  nowValue: 0
 };
 
 
@@ -53,7 +60,10 @@ export const detailItemsReducer = createReducer(
   }),
   on(updateMaxAmount, (state, { maxAmount }) => {
     return {...state, maxAmount: maxAmount};
-  }) 
+  }) ,
+  on(updateNowValue, (state, {nowValue}) => {
+    return {...state, nowValue: nowValue};
+  })
 )
 
 export function reducer(state: State | undefined, action: Action){
@@ -67,3 +77,4 @@ export function reducer(state: State | undefined, action: Action){
 const getState = createFeatureSelector<State>(featureName);
 export const getDetailItems = createSelector(getState, state => state.detailItems);
 export const getMaxAmount = createSelector(getState, state => state.maxAmount);
+export const getNowValue = createSelector(getState, state => state.nowValue);

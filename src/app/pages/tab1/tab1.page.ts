@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MoneyItem } from 'src/interface';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { getDetailItems } from 'src/app/store/data';
+import { getDetailItems, getNowValue } from 'src/app/store/data';
 import { StorageService } from '../../services/storage.service';
 
 @Component({
@@ -11,7 +11,8 @@ import { StorageService } from '../../services/storage.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  datas$ = this.store.pipe(select(getDetailItems))
+  datas$ = this.store.pipe(select(getDetailItems));
+  nowValue$ = this.store.pipe(select(getNowValue));
 
   constructor(
     private router: Router,
@@ -21,6 +22,7 @@ export class Tab1Page {
 
   ngOnInit(){
     this.storageService.loadDetailItems();
+    this.storageService.loadNowValue();
   }
 
   toIncome(){
