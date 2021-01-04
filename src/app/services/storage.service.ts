@@ -60,14 +60,12 @@ export class StorageService {
 
   //  from detail
   //  remove item
-  removeDetailItem(item: MoneyItem){
+  removeDetailItem(id: string){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
-      if(res.length > 1){
-        if(item.id === res[0].id && item.date === res[1].date){
-          res[1].isDateOfPreviosItem = true;
-        }
+      const detailItems = res.filter(item => item.id !== id);
+      if(detailItems.length > 0){
+        detailItems[0].isDateOfPreviosItem = true;
       }
-      const detailItems = res.filter(_item => _item.id !== item.id);
       this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
