@@ -24,4 +24,13 @@
   </ion-item>
 </ion-list>
 
+<ion-grid>
+  <ion-row>
+    <ion-col *ngFor="let category of categories" size="3" (click)="selectCategory(category)">
+      {{category}}
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
 <ion-button class="width-button" (click)="updateDetailItems()">{{props.buttonName}}</ion-button>

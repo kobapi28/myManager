@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { InputProps, MoneyItem } from 'src/interface';
+import { expensesCategory, incomeCategory, InputProps, MoneyItem } from 'src/interface';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { TransitionService } from '../../services/transition.service';
@@ -13,6 +13,14 @@ import { TransitionService } from '../../services/transition.service';
 export class InputFormsComponent implements OnInit {
   @Input() props: InputProps;
   item: MoneyItem;
+  categories: incomeCategory[] | expensesCategory[] = [];
+
+  // 収入のカテゴリの配列
+  incomeCategories: incomeCategory[] = ['給料', 'おこづかい', '賞与', '臨時収入', 'その他'];
+  // 支出のカテゴリの配列
+  expensesCategories: expensesCategory[] = ['食費', '日用品', '衣服', '美容', '交際費', '医療費', '教育費', '光熱費', '交通費', '通信費', '住居費', 'その他'];
+
+
 
   constructor(
     private alertCtrl: AlertController,
@@ -47,6 +55,12 @@ export class InputFormsComponent implements OnInit {
         isDateOfPreviosItem: true
       };
     }
+
+    this.categories = this.item.isIncome ? this.incomeCategories : this.expensesCategories;
+  }
+
+  selectCategory(category: incomeCategory | expensesCategory){
+    this.item.category = category;
   }
 
   updateDetailItems(){
@@ -57,7 +71,6 @@ export class InputFormsComponent implements OnInit {
       this.router.navigate([this.props.toNext,this.item.id]);
     }else{
       // new Item
-      this.item.category = this.props.isIncome ? 'work': 'buy';
       console.log(this.item);
       this.storageService.pushDetailItem(this.item);
       this.router.navigate([this.props.toNext]);
