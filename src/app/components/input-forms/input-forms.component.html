@@ -26,8 +26,9 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col *ngFor="let category of categories" size="3" (click)="selectCategory(category)">
-      {{category}}
+    <ion-col *ngFor="let category of categories" size="3" (click)="selectCategory(category)" class="ion-text-center" [class.selected-category]="category === this.item.category">
+      <img src="../../../assets/icon/favicon.png"><br>
+      <ion-text>{{category}}</ion-text>
     </ion-col>
   </ion-row>
 </ion-grid>

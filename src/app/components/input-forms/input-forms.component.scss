@@ -8,7 +8,16 @@ ion-list{
   border-radius: 10px;
 }
 
+ion-grid{
+  padding: 20px;
+}
+
 ion-col{
-  background-color: gray;
-  margin: 10px;
+  box-shadow: 0 0 3px #ccc;
+  --ion-grid-width: 100px;
+  border-radius: 10px;
+}
+
+.selected-category{
+  background-color: hotpink;
 }
