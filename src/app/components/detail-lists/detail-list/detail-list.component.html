@@ -5,7 +5,7 @@
 </ion-item-divider>
 <ion-item lines="none">
   <ion-label>
-    {{item.category}}
+    {{item.title}}
   </ion-label>
   <ion-icon icon="person-sharp" size="small" slot="start"></ion-icon>
   <ion-text *ngIf="item.isIncome; else Expenses" slot="end" class="income">+ {{item.amount}}<span class="yen">円</span></ion-text>
