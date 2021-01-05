@@ -1,6 +1,6 @@
 <ion-item-divider id="sticky" *ngIf="item.isDateOfPreviosItem">
   <ion-label id="divider-label">
-    {{item.date}}
+    {{item.date.split('T')[0]}}
   </ion-label>
 </ion-item-divider>
 <ion-item lines="none">
