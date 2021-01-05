@@ -9,6 +9,8 @@ import { DateFormComponent } from './date-form/date-form.component';
 
 import { DetailListsModule } from './detail-lists/detail-lists.module';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     DetailListsComponent,
@@ -17,6 +19,7 @@ import { DetailListsModule } from './detail-lists/detail-lists.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     IonicModule,
     DetailListsModule
   ],

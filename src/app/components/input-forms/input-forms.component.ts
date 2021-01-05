@@ -23,69 +23,40 @@ export class InputFormsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.item = 
-    this.props.isUpdate? 
-    this.transitionService.getDetailItem() : 
-    {
-      isIncome: this.props.isIncome,
-      category: null,
-      id: this.getUniqueStr(),
-      memo: '',
-      amount: 1000,
-      date: null,
-      isDateOfPreviosItem: true
-    };
-  }
-
-  async presentMemoAlert() {
-    const alert = await this.alertCtrl.create({
-      cssClass: '',
-      header: 'memo',
-      inputs: [
-        {
-          type: 'text',
-          placeholder: 'memo'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: () => {
-            console.log('Confirm Ok');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+    if(this.props.isUpdate){
+      const item = this.transitionService.getDetailItem();
+      this.item = {
+        isIncome: item.isIncome,
+        category: item.category,
+        id: item.id,
+        title: item.title,
+        memo: item.memo,
+        amount: item.amount,
+        date: item.date,
+        isDateOfPreviosItem: item.isDateOfPreviosItem
+      };
+    }else{
+      this.item = {
+        isIncome: this.props.isIncome,
+        category: null,
+        id: this.getUniqueStr(),
+        title: '',
+        memo: '',
+        amount: 0,
+        date: null,
+        isDateOfPreviosItem: true
+      };
+    }
   }
 
   updateDetailItems(){
     if(this.props.isUpdate){
       // update Item
-      let detailItem = Object.freeze(this.item);
-      detailItem = {
-        isIncome: this.item.isIncome, // keep
-        category: this.item.category,
-        id: this.item.id, // keep
-        memo: this.item.memo,
-        amount: Math.floor(Math.random() * 10000),
-        date: this.item.date, // keep,
-        isDateOfPreviosItem: this.item.isDateOfPreviosItem // keep
-      }
-      this.storageService.updateDetailItem(detailItem);
-      this.transitionService.setDetailItem(detailItem);
+      this.storageService.updateDetailItem(this.item);
+      this.transitionService.setDetailItem(this.item);
       this.router.navigate([this.props.toNext,this.item.id]);
     }else{
       // new Item
-      this.item.date = new Date().toLocaleDateString();
       this.item.category = this.props.isIncome ? 'work': 'buy';
       console.log(this.item);
       this.storageService.pushDetailItem(this.item);

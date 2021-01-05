@@ -7,6 +7,7 @@ export interface MoneyItem {
   isIncome: boolean;  // 収入かどうか
   category: incomeCategory | expensesCategory;  // カテゴリ
   id: string;  // id
+  title: string;  // title
   memo: string;  // memo
   amount: number;  // 金額
   date: string;  // 日付

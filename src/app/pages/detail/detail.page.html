@@ -13,10 +13,11 @@
       <ion-avatar>
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </ion-avatar>
-      <ion-text><h1>shopping</h1></ion-text>
+      <ion-text><h1>{{item.title}}</h1></ion-text>
       <ion-text><h4>{{item.date}}</h4></ion-text>
       <ion-chip>buy</ion-chip><br>
       <ion-text class="amount-text"><h1>{{item.amount}}</h1><h3>円</h3></ion-text>
+      <ion-text><h4>{{item.memo}}</h4></ion-text>
     </div>
     <div class="buttons">
       <ion-button class="width-button" (click)="toEdit()">編集する</ion-button>

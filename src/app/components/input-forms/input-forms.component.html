@@ -1,9 +1,9 @@
 <ion-list class="list-border">
   <ion-item>
-    <ion-input type="text" placeholder="タイトル"></ion-input>
+    <ion-input type="text" placeholder="タイトル" [(ngModel)]="item.title"></ion-input>
   </ion-item>
   <ion-item lines="none">
-    <ion-textarea placeholder="メモ"></ion-textarea>
+    <ion-textarea placeholder="メモ" [(ngModel)]="item.memo"></ion-textarea>
   </ion-item>
 </ion-list>
 
@@ -12,7 +12,7 @@
 <ion-list class="list-border">
   <ion-item lines="none">
     <ion-label>金額</ion-label>
-    <ion-input type="number" id="money-form"></ion-input>
+    <ion-input type="number" id="money-form" [(ngModel)]="item.amount"></ion-input>
     <ion-text>円</ion-text>
   </ion-item>
 </ion-list>
@@ -20,9 +20,8 @@
 <ion-list class="list-border">
   <ion-item lines="none">
     <ion-label>日付</ion-label>
-    <ion-datetime></ion-datetime>
+    <ion-datetime placeholder="Select Date" [(ngModel)]="item.date"></ion-datetime>
   </ion-item>
 </ion-list>
 
-<ion-button (click)="presentMemoAlert()" class="width-button">memo</ion-button>
 <ion-button class="width-button" (click)="updateDetailItems()">{{props.buttonName}}</ion-button>
