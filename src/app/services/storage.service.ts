@@ -62,13 +62,9 @@ export class StorageService {
         this.updateNowValue(item.amount, 0);
       }
 
-      // find remove item index
-      const removeItemIndex = res.findIndex(_item => _item.id === item.id);
-      if(res.length-1 > removeItemIndex && res[removeItemIndex].date === res[removeItemIndex+1].date){
-        res[removeItemIndex+1].isDateOfPreviosItem = true;
-      }
 
-      const detailItems = res.filter(_item => _item.id !== item.id);
+      let detailItems = res.filter(_item => _item.id !== item.id);
+      detailItems = this.setIsDateOfPreviosItem(detailItems);
 
       this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
@@ -99,14 +95,6 @@ export class StorageService {
       }else{
         // changed
         // update nowValue
-        updatedItem.isDateOfPreviosItem = true;
-        // find remove item index
-        const removeItemIndex = res.findIndex(_item => _item.id === updatedItem.id);
-        if(res.length-1 > removeItemIndex && res[removeItemIndex].date === res[removeItemIndex+1].date){
-          res[removeItemIndex+1].isDateOfPreviosItem = true;
-        }
-
-
         for (const item of res) {
           if(item.id === updatedItem.id){
             if(updatedItem.isIncome){
@@ -121,6 +109,8 @@ export class StorageService {
         let detailItems = res.filter(item => item.id !== updatedItem.id);
         // push new item
         detailItems = this.sortDetailItems(updatedItem, detailItems);
+        detailItems = this.setIsDateOfPreviosItem(detailItems);
+
         this.storage.set('detailItemData',detailItems);
         this.store.dispatch(updateDetailItems({detailItems}));
       }
@@ -128,7 +118,7 @@ export class StorageService {
   }
 
   // sort items by date
-  sortDetailItems(pushItem: MoneyItem, items: MoneyItem[]){
+  sortDetailItems(pushItem: MoneyItem, items: MoneyItem[]): MoneyItem[]{
     let pushed: boolean = false;
     let setIndex: number = items.length;
 
@@ -139,11 +129,24 @@ export class StorageService {
       }else if(item.date === pushItem.date && !pushed){
         setIndex = index;
         pushed = true;
+        // push: after item's isDateOfPreviosItem => false
         item.isDateOfPreviosItem = false;
       }
     })
 
     items.splice(setIndex, 0, pushItem);
+    return items;
+  }
+
+  setIsDateOfPreviosItem(items: MoneyItem[]): MoneyItem[]{
+    items[0].isDateOfPreviosItem = true;
+    for(let i=1;i<items.length;i++){
+      if(items[i-1].date === items[i].date){
+        items[i].isDateOfPreviosItem = false;
+      }else{
+        items[i].isDateOfPreviosItem = true;
+      }
+    }
     return items;
   }
 
