@@ -38,27 +38,13 @@ export class StorageService {
         this.updateNowValue(0, item.amount);
       }
 
-      const items: MoneyItem[] = [];
-      items.push(item);
-      // 直近のアイテムの日付と同じならfalseにする
-      console.log(res);
-      if(res === null){
-        // storage に何もない場合 (null)
+      if(res === null || res.length === 0){
+        const items: MoneyItem[] = [];
+        items.push(item);
         this.storage.set('detailItemData',items);
         this.store.dispatch(updateDetailItems({detailItems: items}))
-      }else if(res.length === 0){
-        // storage に何もない場合 (0)
-        this.storage.set('detailItemData',items);
-        this.store.dispatch(updateDetailItems({detailItems: items}))
-      }else if(res[0].date === item.date){
-        //  storage に値は存在し、最新が今日の場合
-        res[0].isDateOfPreviosItem = false;
-        const detailItems = items.concat(res);
-        this.storage.set('detailItemData',detailItems);
-        this.store.dispatch(updateDetailItems({detailItems}))
       }else{
-        //  storage に値は存在し、最新が前日よりも古い場合
-        const detailItems = items.concat(res);
+        const detailItems = this.sortDetailItems(item, res);
         this.storage.set('detailItemData',detailItems);
         this.store.dispatch(updateDetailItems({detailItems}))
       }
@@ -76,10 +62,14 @@ export class StorageService {
         this.updateNowValue(item.amount, 0);
       }
 
-      const detailItems = res.filter(_item => _item.id !== item.id);
-      if(detailItems.length > 0){
-        detailItems[0].isDateOfPreviosItem = true;
+      // find remove item index
+      const removeItemIndex = res.findIndex(_item => _item.id === item.id);
+      if(res.length-1 > removeItemIndex && res[removeItemIndex].date === res[removeItemIndex+1].date){
+        res[removeItemIndex+1].isDateOfPreviosItem = true;
       }
+
+      const detailItems = res.filter(_item => _item.id !== item.id);
+
       this.storage.set('detailItemData',detailItems);
       this.store.dispatch(updateDetailItems({detailItems}))
     })
@@ -87,25 +77,77 @@ export class StorageService {
 
   // from editDetail
   // update item
-  updateDetailItem(updatedItem: MoneyItem){
+  updateDetailItem(updatedItem: MoneyItem, isBeforeDate: boolean){
     this.storage.get('detailItemData').then((res: MoneyItem[]) => {
-      const detailItems = res.map(item => {
-        if(item.id === updatedItem.id){
-          // update nowValue
-          if(updatedItem.isIncome){
-            this.updateNowValue(updatedItem.amount, item.amount);
+      if(isBeforeDate){
+        // no chenge date
+        const detailItems = res.map(item => {
+          if(item.id === updatedItem.id){
+            // update nowValue
+            if(updatedItem.isIncome){
+              this.updateNowValue(updatedItem.amount, item.amount);
+            }else{
+              this.updateNowValue(item.amount, updatedItem.amount);
+            }
+            return updatedItem;
           }else{
-            this.updateNowValue(item.amount, updatedItem.amount);
+            return item;
           }
-          return updatedItem;
-        }else{
-          return item;
+        })
+        this.storage.set('detailItemData',detailItems);
+        this.store.dispatch(updateDetailItems({detailItems}));
+      }else{
+        // changed
+        // update nowValue
+        updatedItem.isDateOfPreviosItem = true;
+        // find remove item index
+        const removeItemIndex = res.findIndex(_item => _item.id === updatedItem.id);
+        if(res.length-1 > removeItemIndex && res[removeItemIndex].date === res[removeItemIndex+1].date){
+          res[removeItemIndex+1].isDateOfPreviosItem = true;
         }
-      })
-      this.storage.set('detailItemData',detailItems);
-      this.store.dispatch(updateDetailItems({detailItems}))
+
+
+        for (const item of res) {
+          if(item.id === updatedItem.id){
+            if(updatedItem.isIncome){
+              this.updateNowValue(updatedItem.amount, item.amount);
+            }else{
+              this.updateNowValue(item.amount, updatedItem.amount);
+            }
+            break;
+          }
+        }
+        // delete item
+        let detailItems = res.filter(item => item.id !== updatedItem.id);
+        // push new item
+        detailItems = this.sortDetailItems(updatedItem, detailItems);
+        this.storage.set('detailItemData',detailItems);
+        this.store.dispatch(updateDetailItems({detailItems}));
+      }
     })
   }
+
+  // sort items by date
+  sortDetailItems(pushItem: MoneyItem, items: MoneyItem[]){
+    let pushed: boolean = false;
+    let setIndex: number = items.length;
+
+    items.forEach((item, index) => {
+      if(item.date < pushItem.date && !pushed){
+        setIndex = index;
+        pushed = true;
+      }else if(item.date === pushItem.date && !pushed){
+        setIndex = index;
+        pushed = true;
+        item.isDateOfPreviosItem = false;
+      }
+    })
+
+    items.splice(setIndex, 0, pushItem);
+    return items;
+  }
+
+
 
   // from setting
   // remove all item

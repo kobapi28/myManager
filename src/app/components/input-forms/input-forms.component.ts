@@ -14,6 +14,7 @@ export class InputFormsComponent implements OnInit {
   @Input() props: InputProps;
   item: MoneyItem;
   categories: incomeCategory[] | expensesCategory[] = [];
+  beforeDate: string;
 
   // 収入のカテゴリの配列
   incomeCategories: incomeCategory[] = ['給料', 'おこづかい', '賞与', '臨時収入', 'その他'];
@@ -33,6 +34,7 @@ export class InputFormsComponent implements OnInit {
   ngOnInit() {
     if(this.props.isUpdate){
       const item = this.transitionService.getDetailItem();
+      this.beforeDate = item.date;
       this.item = {
         isIncome: item.isIncome,
         category: item.category,
@@ -66,13 +68,17 @@ export class InputFormsComponent implements OnInit {
   updateDetailItems(){
     if(this.props.isUpdate){
       // update Item
-      this.storageService.updateDetailItem(this.item);
-      this.transitionService.setDetailItem(this.item);
-      this.router.navigate([this.props.toNext,this.item.id]);
+      const item = this.item;
+      item.date = this.formatDate(item.date);
+      const isBeforeDate: boolean = item.date === this.beforeDate;
+      this.storageService.updateDetailItem(item, isBeforeDate);
+      this.transitionService.setDetailItem(item);
+      this.router.navigate([this.props.toNext,item.id]);
     }else{
       // new Item
-      console.log(this.item);
-      this.storageService.pushDetailItem(this.item);
+      const item = this.item;
+      item.date = this.formatDate(item.date);
+      this.storageService.pushDetailItem(item);
       this.router.navigate([this.props.toNext]);
     }
   }
@@ -83,6 +89,11 @@ export class InputFormsComponent implements OnInit {
       new Date().getTime().toString(16) +
       Math.floor(1000 * Math.random()).toString(16)
     );
+  }
+
+  formatDate(date: string): string {
+    // 2021-01-01T... -> 2021-01-01 
+    return date.split('T')[0];
   }
 
 }
